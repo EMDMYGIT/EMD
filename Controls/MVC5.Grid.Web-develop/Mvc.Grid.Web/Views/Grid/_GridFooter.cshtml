@@ -1,0 +1,8 @@
+﻿@model IGrid<PersonModel>
+
+<tr>
+    <td colspan="2"><b>Average</b></td>
+    <td>@(Model.Rows.Average(row => row.Model.Age))</td>
+    <td></td>
+    <td></td>
+</tr>

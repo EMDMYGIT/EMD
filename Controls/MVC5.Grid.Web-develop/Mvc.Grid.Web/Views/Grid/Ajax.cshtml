@@ -1,0 +1,118 @@
+﻿@{
+    ViewBag.Title = "MVC.Grid ajax";
+}
+
+<div class="example content-block">
+    <div class="widget">
+        <div class="widget-header">
+            <h1>
+                <i class="fa fa-bars"></i>
+                Ajax grid
+                <span class="widget-buttons">
+                    <i class="content-toggle"></i>
+                </span>
+            </h1>
+        </div>
+        <div class="widget-content">
+            @Html.AjaxGrid(Url.Action("GridPartial", new { param = "value" }))
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="example-code content-block">
+                    <div class="widget">
+                        <div class="widget-header">
+                            <i class="fa fa-code"></i>
+                            Controller
+                            <span class="widget-buttons">
+                                <i class="content-toggle"></i>
+                            </span>
+                        </div>
+                        <div class="widget-content">
+<pre>
+<code>
+[<span class="cls">HttpGet</span>]
+<span class="kwd">public</span> <span class="cls">ActionResult</span> Index(<span class="cls">String</span> mainParam)
+{
+    <span class="com">// Only main string query values will be visible here.</span>
+    <span class="kwd">return</span> View();
+}
+
+[<span class="cls">HttpGet</span>]
+<span class="kwd">public</span> <span class="cls">ActionResult</span> IndexGrid(<span class="cls">String</span> param)
+{
+    <span class="com">// Only grid string query values will be visible here.</span>
+    <span class="kwd">return</span> PartialView(<span class="str">"_IndexGrid"</span>, <span class="cls">PeopleRepository</span>.GetPeople());
+}
+</code>
+</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="example-code content-block">
+                    <div class="widget">
+                        <div class="widget-header">
+                            <i class="fa fa-code"></i>
+                            Main view
+                            <span class="widget-buttons">
+                                <i class="content-toggle"></i>
+                            </span>
+                        </div>
+                        <div class="widget-content">
+<pre>
+<code>
+@@Html.AjaxGrid(Url.Action(<span class="str">"IndexGrid"</span>, <span class="kwd">new</span> { param = <span class="str">"value"</span>}))
+</code>
+</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    _IndexGrid partial view
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IEnumerable</span>&lt;<span class="cls">PersonModel</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birth date"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .Pageable(pager =>
+    {
+        pager.PagesToDisplay = 2;
+        pager.RowsPerPage = 2;
+    })
+    .Filterable()
+    .Sortable()
+)
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

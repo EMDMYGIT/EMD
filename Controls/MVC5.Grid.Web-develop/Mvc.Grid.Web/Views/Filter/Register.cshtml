@@ -1,0 +1,285 @@
+﻿@model IEnumerable<PersonModel>
+
+@{
+    ViewBag.Title = "MVC.Grid custom filter registration";
+}
+
+<div class="example content-block">
+    <div class="widget">
+        <div class="widget-header">
+            <h1>
+                <i class="fa fa-bars"></i>
+                Registering a custom filter
+                <span class="widget-buttons">
+                    <i class="content-toggle"></i>
+                </span>
+            </h1>
+        </div>
+        <div class="widget-content">
+            @(Html
+                .Grid(Model)
+                .Build(columns =>
+                {
+                    columns.Add(model => model.Name).Titled("Name");
+                    columns.Add(model => model.Surname).Titled("Surname");
+                    columns.Add(model => model.IsWorking).Titled("Employed");
+                })
+                .Filterable()
+            )
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Global.asax
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public void</span> Application_Start()
+{
+    <span class="cls">MvcGrid</span>.Filters.Register(<span class="kwd">typeof</span>(<span class="cls">Boolean</span>), <span class="str">"Is"</span>, <span class="kwd">typeof</span>(<span class="cls">BooleanIsNullFilter</span>))
+}
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    BooleanIsNullFilter.cs
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public class</span> <span class="cls">BooleanIsNullFilter</span> : <span class="cls">BaseGridFilter</span>
+{
+    <span class="kwd">public override</span> <span class="cls">Expression</span> Apply(<span class="cls">Expression</span> expression)
+    {
+        <span class="kwd">return</span> <span class="cls">Expression</span>.Equal(expression, <span class="cls">Expression</span>.Constant(<span class="kwd">null</span>));
+    }
+}
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IEnumerable</span>&lt;<span class="cls">PersonModel</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .Filterable()
+)
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Javascript
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">var</span> CustomBooleanFilter = (<span class="kwd">function</span> () {
+    <span class="kwd">function</span> CustomBooleanFilter() {
+    }
+
+    CustomBooleanFilter.prototype = {
+        render: <span class="kwd">function</span> (grid, popup, filter) {
+            <span class="kwd">var</span> lang = $.fn.mvcgrid.lang.Boolean;
+            lang.NotSpecified = <span class="str">'Not specified'</span>;
+
+            popup.html(
+                <span class="str">'&lt;div class="popup-arrow"&gt;&lt;/div&gt;'</span> +
+                <span class="str">'&lt;div class="popup-content"&gt;'</span> +
+                    <span class="str">'&lt;div class="first-filter popup-group"&gt;'</span> +
+                        <span class="str">'&lt;ul class="mvc-grid-boolean-filter"&gt;'</span> +
+                            <span class="str">'&lt;li '</span> + (filter.first.val == <span class="str">'NotSpecified'</span> ? <span class="str">'class="active" '</span> : <span class="str">''</span>) + <span class="str">'data-value="NotSpecified"&gt;'</span> + lang.NotSpecified + <span class="str">'&lt;/li&gt;'</span> +
+                            <span class="str">'&lt;li '</span> + (filter.first.val == <span class="str">'True'</span> ? <span class="str">'class="active" '</span> : <span class="str">''</span>) + <span class="str">'data-value="True"&gt;'</span> + lang.Yes + <span class="str">'&lt;/li&gt;'</span> +
+                            <span class="str">'&lt;li '</span> + (filter.first.val == <span class="str">'False'</span> ? <span class="str">'class="active" '</span> : <span class="str">''</span>) + <span class="str">'data-value="False"&gt;'</span> + lang.No + <span class="str">'&lt;/li&gt;'</span> +
+                        <span class="str">'&lt;/ul&gt;'</span> +
+                    <span class="str">'&lt;/div&gt;'</span> +
+                    <span class="str">'&lt;div class="popup-button-group"&gt;'</span> +
+                        <span class="str">'&lt;button class="btn btn-success mvc-grid-apply" type="button"&gt;&#10004;&lt;/button&gt;'</span> +
+                        <span class="str">'&lt;button class="btn btn-danger mvc-grid-cancel" type="button"&gt;&#10008;&lt;/button&gt;'</span> +
+                    <span class="str">'&lt;/div&gt;'</span> +
+                <span class="str">'&lt;/div&gt;'</span>);
+        },
+
+        init: <span class="kwd">function</span> (grid, column, popup) {
+            <span class="kwd">this</span>.bindValue(grid, column, popup);
+            <span class="kwd">this</span>.bindApply(grid, column, popup);
+            <span class="kwd">this</span>.bindCancel(grid, column, popup);
+        },
+        bindValue: <span class="kwd">function</span> (grid, column, popup) {
+            <span class="kwd">var</span> values = popup.find(<span class="str">'.first-filter li'</span>);
+            values.on(<span class="str">'click.mvcgrid'</span>, <span class="kwd">function</span> () {
+                $(<span class="kwd">this</span>).addClass(<span class="str">'active'</span>).siblings().removeClass(<span class="str">'active'</span>);
+            });
+        },
+        bindApply: <span class="kwd">function</span> (grid, column, popup) {
+            <span class="kwd">var</span> apply = popup.find(<span class="str">'.mvc-grid-apply'</span>);
+            apply.on(<span class="str">'click.mvcgrid'</span>, <span class="kwd">function</span> () {
+                popup.removeClass(<span class="str">'open'</span>);
+                column.filter.first.val = popup.find(<span class="str">'.first-filter .active'</span>).data(<span class="str">'value'</span>);
+                <span class="kwd">if</span> (column.filter.first.val == <span class="str">'NotSpecified'</span>) {
+                    column.filter.first.type = <span class="str">'Is'</span>;
+                } <span class="kwd">else</span> {
+                    column.filter.first.type = <span class="str">'Equals'</span>;
+                }
+
+                grid.applyFilter(column);
+                grid.reload();
+            });
+        },
+        bindCancel: <span class="kwd">function</span> (grid, column, popup) {
+            <span class="kwd">var</span> cancel = popup.find(<span class="str">'.mvc-grid-cancel'</span>);
+            cancel.on(<span class="str">'click.mvcgrid'</span>, <span class="kwd">function</span> () {
+                popup.removeClass(<span class="str">'open'</span>);
+
+                if (column.filter.first.type) {
+                    grid.cancelFilter(column);
+                    grid.reload();
+                }
+            });
+        }
+    };;
+
+    <span class="kwd">return</span> CustomBooleanFilter;
+})();
+
+$(<span class="str">'.mvc-grid'</span>).mvcgrid({
+    filters: {
+        <span class="str">'Boolean'</span>: <span class="kwd">new</span> CustomBooleanFilter()
+    }
+});
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+<script>
+    var CustomBooleanFilter = (function () {
+        function CustomBooleanFilter() {
+        }
+
+        CustomBooleanFilter.prototype = {
+            render: function (grid, popup, filter) {
+                var lang = $.fn.mvcgrid.lang.Boolean;
+                lang.NotSpecified = 'Not specified';
+
+                popup.html(
+                    '<div class="popup-arrow"></div>' +
+                    '<div class="popup-content">' +
+                        '<div class="first-filter popup-group">' +
+                            '<ul class="mvc-grid-boolean-filter">' +
+                                '<li ' + (filter.first.val == 'NotSpecified' ? 'class="active" ' : '') + 'data-value="NotSpecified">' + lang.NotSpecified + '</li>' +
+                                '<li ' + (filter.first.val == 'True' ? 'class="active" ' : '') + 'data-value="True">' + lang.Yes + '</li>' +
+                                '<li ' + (filter.first.val == 'False' ? 'class="active" ' : '') + 'data-value="False">' + lang.No + '</li>' +
+                            '</ul>' +
+                        '</div>' +
+                        '<div class="popup-button-group">' +
+                            '<button class="btn btn-success mvc-grid-apply" type="button">&#10004;</button>' +
+                            '<button class="btn btn-danger mvc-grid-cancel" type="button">&#10008;</button>' +
+                        '</div>' +
+                    '</div>');
+            },
+
+            init: function (grid, column, popup) {
+                this.bindValue(grid, column, popup);
+                this.bindApply(grid, column, popup);
+                this.bindCancel(grid, column, popup);
+            },
+            bindValue: function (grid, column, popup) {
+                var values = popup.find('.first-filter li');
+                values.on('click.mvcgrid', function () {
+                    $(this).addClass('active').siblings().removeClass('active');
+                });
+            },
+            bindApply: function (grid, column, popup) {
+                var apply = popup.find('.mvc-grid-apply');
+                apply.on('click.mvcgrid', function () {
+                    popup.removeClass('open');
+                    column.filter.first.val = popup.find('.first-filter .active').data('value');
+                    if (column.filter.first.val == 'NotSpecified') {
+                        column.filter.first.type = 'Is';
+                    } else {
+                        column.filter.first.type = 'Equals';
+                    }
+
+                    grid.applyFilter(column);
+                    grid.reload();
+                });
+            },
+            bindCancel: function (grid, column, popup) {
+                var cancel = popup.find('.mvc-grid-cancel');
+                cancel.on('click.mvcgrid', function () {
+                    popup.removeClass('open');
+
+                    if (column.filter.first.type) {
+                        grid.cancelFilter(column);
+                        grid.reload();
+                    }
+                });
+            }
+        };;
+
+        return CustomBooleanFilter;
+    })();
+
+    $('.mvc-grid').mvcgrid({
+        filters: {
+            'Boolean': new CustomBooleanFilter()
+        }
+    });
+</script>
+}

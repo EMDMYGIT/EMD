@@ -1,0 +1,25 @@
+﻿<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+<#@ Output Extension="cs" #>
+using MVC5Test.Data.Core;
+using MVC5Test.Objects;
+using System;
+
+namespace MVC5Test.Validators
+{
+    public class <#= Model.Validator #> : BaseValidator, <#= Model.IValidator #>
+    {
+        public <#= Model.Validator #>(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
+        {
+        }
+
+        public Boolean CanCreate(<#= Model.View #> view)
+        {
+            return ModelState.IsValid;
+        }
+        public Boolean CanEdit(<#= Model.View #> view)
+        {
+            return ModelState.IsValid;
+        }
+    }
+}

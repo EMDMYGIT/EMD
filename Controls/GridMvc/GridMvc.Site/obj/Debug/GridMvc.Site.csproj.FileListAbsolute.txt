@@ -1,0 +1,2 @@
+C:\Programació\Projects\Controls\GridMvc\GridMvc.Site\obj\Debug\GridMvc.Site.csproj.App.config
+C:\Programació\Projects\Controls\GridMvc\GridMvc.Site\obj\Debug\GridMvc.Site.csprojResolveAssemblyReference.cache

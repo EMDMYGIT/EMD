@@ -1,0 +1,5 @@
+C:\Programació\Projects\Controls\MVC5.Datalist-develop\src\Datalist\bin\Debug\net45\Datalist.dll
+C:\Programació\Projects\Controls\MVC5.Datalist-develop\src\Datalist\bin\Debug\net45\Datalist.pdb
+C:\Programació\Projects\Controls\MVC5.Datalist-develop\src\Datalist\obj\Debug\net45\Datalist.AssemblyInfo.cs
+C:\Programació\Projects\Controls\MVC5.Datalist-develop\src\Datalist\obj\Debug\net45\Datalist.dll
+C:\Programació\Projects\Controls\MVC5.Datalist-develop\src\Datalist\obj\Debug\net45\Datalist.pdb

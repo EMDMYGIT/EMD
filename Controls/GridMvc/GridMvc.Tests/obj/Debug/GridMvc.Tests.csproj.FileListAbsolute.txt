@@ -1,0 +1,1 @@
+C:\Programació\Projects\Controls\GridMvc\GridMvc.Tests\obj\Debug\GridMvc.Tests.csprojResolveAssemblyReference.cache

@@ -1,0 +1,13 @@
+﻿<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+<#@ Output Extension="cs" #>
+using MVC5Test.Objects;
+using System;
+
+namespace MVC5Test.Validators
+{
+    public interface <#= Model.IValidator #> : IValidator
+    {
+        Boolean CanCreate(<#= Model.View #> view);
+        Boolean CanEdit(<#= Model.View #> view);
+    }
+}

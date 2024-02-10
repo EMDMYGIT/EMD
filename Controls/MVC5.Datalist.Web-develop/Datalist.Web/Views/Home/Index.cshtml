@@ -1,0 +1,250 @@
+﻿@model Person
+@{
+    ViewBag.Title = "MVC.Datalist quick start";
+}
+
+<div class="row">
+    <div class="col-md-12 col-lg-4">
+        <div class="example content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-bars"></i>
+                    Autocomplete
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+                    @Html.AutoComplete("Autocomplete", new PeopleDatalist { Url = "/Home/AllPeople" }, 2)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-4">
+        <div class="example content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-bars"></i>
+                    Datalist
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+                    @Html.Datalist("Datalist", new PeopleDatalist { Url = "/Home/AllPeople" }, 2)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-4">
+        <div class="example content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-bars"></i>
+                    Multi datalist
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+                    @Html.Datalist("MultiDatalist", new PeopleDatalist { Url = "/Home/AllPeople", Multi = true }, new[] { 1, 3 })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-lg-4">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@Html.AutocompleteFor(model => model.Id, <span class="kwd">new</span> <span class="cls">PeopleDatalist</span>())
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-4">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@Html.DatalistFor(model => model.Id, <span class="kwd">new</span> <span class="cls">PeopleDatalist</span>())
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-4">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@Html.DatalistFor(model => model.Ids, <span class="kwd">new</span> <span class="cls">PeopleDatalist</span>(<span class="kwd">true</span>))
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-lg-4">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Controller
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public class</span> <span class="cls">HomeController</span> : <span class="cls">Controller</span>
+{
+    <span class="kwd">private</span> <span class="cls">DbContext</span> Context { <span class="kwd">get</span>; }
+
+    <span class="kwd">public</span> HomeController(<span class="cls">DbContext</span> context)
+    {
+        Context = context;
+    }
+
+    [<span class="cls">HttpGet</span>]
+    <span class="kwd">public</span> <span class="cls">ActionResult</span> Index()
+    {
+        <span class="kwd">return</span> View(Context.Set&lt;<span class="cls">Person</span>&gt;().Find(2));
+    }
+
+    [<span class="cls">HttpGet</span>]
+    <span class="kwd">public</span> <span class="cls">JsonResult</span> AllPeople(<span class="cls">DatalistFilter</span> filter)
+    {
+        <span class="cls">PeopleDatalist</span> datalist = <span class="kwd">new</span> <span class="cls">PeopleDatalist</span>(Context);
+        datalist.Filter = filter;
+
+        <span class="kwd">return</span> Json(datalist.GetData());
+    }
+}
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-4">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    PeopleDatalist
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public class</span> <span class="cls">PeopleDatalist</span> : <span class="cls">MvcDatalist</span>&lt;<span class="cls">Person</span>&gt;
+{
+    <span class="kwd">private</span> <span class="cls">DbContext</span> Context { <span class="kwd">get</span>; }
+
+    <span class="kwd">public</span> PeopleDatalist(<span class="cls">DbContext</span> context)
+    {
+        Context = context;
+    }
+    <span class="kwd">public</span> PeopleDatalist(<span class="cls">Boolean</span> multi = <span class="kwd">false</span>)
+    {
+        Url = <span class="str">"AllPeople"</span>;
+        Title = <span class="str">"People"</span>;
+
+        Multi = multi;
+        Filter.Rows = 5;
+        Filter.Sort = <span class="str">"Income"</span>;
+        Filter.Order = <span class="cls">DatalistSortOrder</span>.Desc;
+    }
+
+    <span class="kwd">public override</span> <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt; GetModels()
+    {
+        <span class="kwd">return</span> Context.Set&lt;<span class="cls">Person</span>&gt;();
+    }
+}
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-4">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Person
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public class</span> <span class="cls">Person</span>
+{
+    [<span class="cls">Key</span>]
+    <span class="kwd">public</span> <span class="cls">Int32</span> Id { <span class="kwd">get</span>; <span class="kwd">set</span>; }
+    <span class="kwd">public</span> <span class="cls">Int32</span>[] Ids { <span class="kwd">get</span>; <span class="kwd">set</span>; }
+
+    [<span class="cls">DatalistColumn</span>]
+    [<span class="cls">Display</span>(Name = <span class="str">"Name"</span>)]
+    <span class="kwd">public</span> <span class="cls">String</span> Name { <span class="kwd">get</span>; <span class="kwd">set</span>; }
+
+    [<span class="cls">DatalistColumn</span>]
+    [<span class="cls">Display</span>(Name = <span class="str">"Surname"</span>)]
+    <span class="kwd">public</span> <span class="cls">String</span> Surname { <span class="kwd">get</span>; <span class="kwd">set</span>; }
+
+    [<span class="cls">DatalistColumn</span>]
+    [<span class="cls">Display</span>(Name = <span class="str">"Income"</span>)]
+    <span class="kwd">public</span> <span class="cls">Int32</span> Income { <span class="kwd">get</span>; <span class="kwd">set</span>; }
+
+    [<span class="cls">Display</span>(Name = <span class="str">"Birthday"</span>)]
+    [<span class="cls">DatalistColumn</span>(Format = <span class="str">"{0:d}"</span>)]
+    <span class="kwd">public</span> <span class="cls">DateTime</span> Birthday { <span class="kwd">get</span>; <span class="kwd">set</span>; }
+
+    <span class="kwd">public</span> <span class="cls">Boolean</span>? IsWorking { <span class="kwd">get</span>; <span class="kwd">set</span>; }
+}
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

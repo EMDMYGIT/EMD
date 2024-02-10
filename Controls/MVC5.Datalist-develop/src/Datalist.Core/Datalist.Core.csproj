@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+      <Version>5.3.0</Version>
+      <Company>NonFactors</Company>
+      <Product>Mvc.Datalist</Product>
+      <TargetFrameworks>net45</TargetFrameworks>
+      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+      <Description>Data lookup controls for ASP.NET Core projects</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNet.Mvc" Version="4.0.40804" />
+      <PackageReference Include="System.Linq.Dynamic" Version="1.0.7" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="System.ComponentModel.DataAnnotations" />
+      <Reference Include="System.Web" />
+    </ItemGroup>
+
+</Project>

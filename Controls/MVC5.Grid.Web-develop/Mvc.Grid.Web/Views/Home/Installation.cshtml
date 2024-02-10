@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "MVC.Grid installation";
+}
+
+<div class="docs content-block">
+    <div class="widget">
+        <div class="widget-header">
+            <h1>
+                <i class="fa fa-bars"></i>
+                Installation steps
+                <span class="widget-buttons">
+                    <i class="content-toggle"></i>
+                </span>
+            </h1>
+        </div>
+        <div class="widget-content">
+            <p>
+                Install MVC.Grid package from nuget.
+            </p>
+            <pre>> Install-Package NonFactors.Grid.Mvc5</pre>
+            <p>
+                Include grid styling sheet.
+            </p>
+            <pre>
+&lt;html&gt;
+    &lt;head&gt;
+        <b>&lt;link href="~/Content/MvcGrid/mvc-grid.css" rel="stylesheet"&gt;</b>
+    &lt;/head&gt;
+    &lt;body&gt;
+        @@RenderBody()
+    &lt;/body&gt;
+&lt;/html&gt;</pre>
+            <p>
+                Include grid scripts after jQuery scripts.
+            </p>
+            <pre>
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;link href="~/Content/MvcGrid/mvc-grid.css" rel="stylesheet"&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        @@RenderBody()
+
+        &lt;script src="~/Scripts/JQuery/jquery.js"&gt;&lt;/script&gt;
+        <b>&lt;script src="~/Scripts/MvcGrid/mvc-grid.js"&gt;&lt;/script&gt;</b>
+    &lt;/body&gt;
+&lt;/html&gt;</pre>
+            <p>
+                Initialize MVC.Grid instances after rendering grid html
+            </p>
+            <pre>
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;link href="~/Content/MvcGrid/mvc-grid.css" rel="stylesheet"&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        @@RenderBody()
+
+        &lt;script src="~/Scripts/JQuery/jquery.js"&gt;&lt;/script&gt;
+        &lt;script src="~/Scripts/MvcGrid/mvc-grid.js"&gt;&lt;/script&gt;
+        &lt;script&gt;
+            <b>$('.mvc-grid').mvcgrid();</b>
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</pre>
+        </div>
+    </div>
+</div>

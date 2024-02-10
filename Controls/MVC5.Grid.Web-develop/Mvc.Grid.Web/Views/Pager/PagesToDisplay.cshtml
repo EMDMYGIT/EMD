@@ -1,0 +1,106 @@
+﻿@model IEnumerable<PersonModel>
+
+@{
+    ViewBag.Title = "MVC.Grid pager pages to display";
+}
+
+<div class="example content-block">
+    <div class="widget">
+        <div class="widget-header">
+            <h1>
+                <i class="fa fa-bars"></i>
+                Displaying pages on a pager
+                <span class="widget-buttons">
+                    <i class="content-toggle"></i>
+                </span>
+            </h1>
+        </div>
+        <div class="widget-content">
+            @(Html
+                .Grid(Model)
+                .Build(columns =>
+                {
+                    columns.Add(model => model.Name).Titled("Name");
+                    columns.Add(model => model.Surname).Titled("Surname");
+
+                    columns.Add(model => model.Age).Titled("Age");
+                    columns.Add(model => model.Birthday).Titled("Birth date");
+                    columns.Add(model => model.IsWorking).Titled("Employed");
+                })
+                .Pageable(pager =>
+                {
+                    pager.PagesToDisplay = 3;
+                    pager.RowsPerPage = 2;
+                })
+            )
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Controller
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+[<span class="cls">HttpGet</span>]
+<span class="kwd">public</span> <span class="cls">ActionResult</span> Index()
+{
+    <span class="kwd">using</span> (<span class="cls">DbContext</span> context = new <span class="cls">ApplicationContext</span>())
+        <span class="kwd">return</span> View(context.Set&lt;<span class="cls">PersonModel</span>&gt;().OrderBy(model => model.Id));
+
+    <span class="com">// Only has to be ordered in database query scenarios with paging enabled</span>
+}
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IEnumerable</span>&lt;<span class="cls">PersonModel</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birth date"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .Pageable(pager =>
+    {
+        pager.PagesToDisplay = 3;
+        pager.RowsPerPage = 2;
+    })
+)
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

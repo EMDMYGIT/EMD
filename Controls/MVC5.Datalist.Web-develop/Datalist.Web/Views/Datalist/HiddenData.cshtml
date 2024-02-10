@@ -1,0 +1,250 @@
+﻿@model Person
+@{
+    ViewBag.Title = "Datalist hidden data";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="example content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-bars"></i>
+                    Autocomplete
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.TextBox("AutocompleteId", null, new { @class = "form-control centered-content", placeholder = "Person ID" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.TextBox("AutocompleteWorking", null, new { @class = "form-control centered-content", placeholder = "Employment status" })
+                        </div>
+                    </div>
+
+                    <br />
+
+                    @Html.AutoComplete("Autocomplete", new PeopleDatalist())
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-bars"></i>
+                    Datalist
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.TextBox("DatalistId", null, new { @class = "form-control centered-content", placeholder = "Person ID" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.TextBox("DatalistWorking", null, new { @class = "form-control centered-content", placeholder = "Employment status" })
+                        </div>
+                    </div>
+
+                    <br />
+
+                    @Html.Datalist("Datalist", new PeopleDatalist())
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@Html.TextBox(<span class="str">"PersonId"</span>)
+@@Html.TextBox(<span class="str">"PersonIsWorking"</span>)
+@@Html.AutocompleteFor(model => model.Id, <span class="kwd">new</span> <span class="cls">PeopleDatalist</span>())
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@Html.TextBox(<span class="str">"PersonId"</span>)
+@@Html.TextBox(<span class="str">"PersonIsWorking"</span>)
+@@Html.DatalistFor(model => model.Id, <span class="kwd">new</span> <span class="cls">PeopleDatalist</span>())
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Javascript
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+$(<span class="str">'.datalist'</span>).datalist({
+    events: {
+        select: <span class="kwd">function</span> (e, data, triggerChanges) {
+            $(<span class="str">'#PersonIsWorking'</span>).val(data.length ? data[0][<span class="str">'IsWorking'</span>] : <span class="str">''</span>);
+            $(<span class="str">'#PersonId'</span>).val(data.length ? data[0][<span class="str">'Id'</span>] : <span class="str">''</span>);
+
+            <span class="kwd">if</span> (triggerChanges) {
+                $(<span class="str">'#PersonIsWorking'</span>).change();
+                $(<span class="str">'#PersonId'</span>).change();
+            }
+        }
+    }
+});
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    PeopleDatalist
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public class</span> <span class="cls">PeopleDatalist</span> : <span class="cls">MvcDatalist</span>&lt;<span class="cls">Person</span>&gt;
+{
+    <span class="kwd">private</span> <span class="cls">DbContext</span> Context { <span class="kwd">get</span>; }
+
+    <span class="kwd">public</span> PeopleDatalist(<span class="cls">DbContext</span> context)
+    {
+        Context = context;
+    }
+    <span class="kwd">public</span> PeopleDatalist()
+    {
+        Url = <span class="str">"AllPeople"</span>;
+    }
+
+    <span class="kwd">public override</span> <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt; GetModels()
+    {
+        <span class="kwd">return</span> Context.Set&lt;<span class="cls">Person</span>&gt;();
+    }
+
+    <span class="kwd">public override void</span> AddData(<span class="cls">Dictionary</span>&lt;<span class="cls">String</span>, <span class="cls">String</span>&gt; row, <span class="cls">Person</span> model)
+    {
+        <span class="kwd">base</span>.AddData(row, model);
+
+        row[<span class="str">"IsWorking"</span>] = GetIsWorkingStringFromBoolean(model.IsWorking);
+    }
+}
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Person
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public class</span> <span class="cls">Person</span>
+{
+    [<span class="cls">DatalistColumn</span>(Hidden = <span class="kwd">true</span>)]
+    <span class="kwd">public</span> <span class="cls">Int32</span> Id { <span class="kwd">get</span>; <span class="kwd">set</span>; }
+
+    [<span class="cls">DatalistColumn</span>]
+    [<span class="cls">Display</span>(Name = <span class="str">"Name"</span>)]
+    <span class="kwd">public</span> <span class="cls">String</span> Name { <span class="kwd">get</span>; <span class="kwd">set</span>; }
+
+    [<span class="cls">DatalistColumn</span>]
+    [<span class="cls">Display</span>(Name = <span class="str">"Surname"</span>)]
+    <span class="kwd">public</span> <span class="cls">String</span> Surname { <span class="kwd">get</span>; <span class="kwd">set</span>; }
+
+    [<span class="cls">DatalistColumn</span>]
+    [<span class="cls">Display</span>(Name = <span class="str">"Income"</span>)]
+    <span class="kwd">public</span> <span class="cls">Int32</span> Income { <span class="kwd">get</span>; <span class="kwd">set</span>; }
+
+    [<span class="cls">Display</span>(Name = <span class="str">"Birthday"</span>)]
+    [<span class="cls">DatalistColumn</span>(Format = <span class="str">"{0:d}"</span>)]
+    <span class="kwd">public</span> <span class="cls">DateTime</span> Birthday { <span class="kwd">get</span>; <span class="kwd">set</span>; }
+
+    <span class="kwd">public</span> <span class="cls">Boolean</span>? IsWorking { <span class="kwd">get</span>; <span class="kwd">set</span>; }
+}
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+<script>
+    $('#Autocomplete').datalist({
+        events: {
+            select: function (e, data, triggerChanges) {
+                $('#AutocompleteWorking').val(data.length ? data[0]['IsWorking'] : '');
+                $('#AutocompleteId').val(data.length ? data[0]['Id'] : '');
+            }
+        }
+    });
+    $('#Datalist').datalist({
+        events: {
+            select: function (e, data, triggerChanges) {
+                $('#DatalistWorking').val(data.length ? data[0]['IsWorking'] : '');
+                $('#DatalistId').val(data.length ? data[0]['Id'] : '');
+            }
+        }
+    });
+</script>
+}

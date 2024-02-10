@@ -1,0 +1,126 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="javascript:void" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Datalist controls for ASP.NET MVC projects.">
+    <title>@ViewBag.Title</title>
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    @Styles.Render("~/content/page/bundle")
+</head>
+<body class="container-fluid">
+    @Html.Partial("MvcDatalist/_Dialog")
+    <div class="row">
+        <div class="col-md-2">
+            <div class="sidebar logo">
+                <a href="https://github.com/NonFactors/MVC5.Datalist">
+                    <img src="@Url.Content("~/Images/github.png")" alt="" width="80" height="80" />
+                    <span class="version">v@(typeof(MvcDatalist).Assembly.GetName().Version)</span>
+                </a>
+            </div>
+            <div class="sidebar-search content-block">
+                @Html.TextBox("SearchInput", null, new { placeholder = "Search..." })
+            </div>
+            <div class="sidebar content-block">
+                <ul>
+                    <li>
+                        @Html.ActionLink("Quick start", "Index", "Home")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Installation", "Installation", "Home")
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar content-block">
+                <ul>
+                    <li>
+                        @Html.ActionLink("Datalist source url", "SourceUrl", "Datalist")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Datalist dialog title", "Title", "Datalist")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Datalist localization", "Localization", "Datalist")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Datalist hidden data", "HiddenData", "Datalist")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Datalist multi selection", "Multi", "Datalist")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Datalist additional filters", "AdditionalFilters", "Datalist")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Datalist initial sort options", "SortOptions", "Datalist")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Datalist initial paging options", "PagingOptions", "Datalist")
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar content-block">
+                <ul>
+                    <li>
+                        @Html.ActionLink("Datalist id value", "Id", "Datalist")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Datalist autocomplete value", "Autocomplete", "Datalist")
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar content-block">
+                <ul>
+                    <li>
+                        @Html.ActionLink("Datalist column key", "Key", "Column")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Datalist column position", "Position", "Column")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Datalist column css class", "CssClass", "Column")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Datalist column header title", "Header", "Column")
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar content-block">
+                <ul>
+                    <li>
+                        @Html.ActionLink("Datalist reload", "Reload", "Javascript")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Datalist browse", "Browse", "Javascript")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Datalist readonly", "Readonly", "Javascript")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Binding select event", "Select", "Javascript")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Binding filter change event", "FilterChange", "Javascript")
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar content-block">
+                <ul>
+                    <li>
+                        @Html.ActionLink("Datalist configuration", "Configuration", "Datalist")
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-10 content">
+            @RenderBody()
+        </div>
+    </div>
+
+    @Scripts.Render("~/scripts/page/bundle")
+    @RenderSection("scripts", false)
+</body>
+</html>

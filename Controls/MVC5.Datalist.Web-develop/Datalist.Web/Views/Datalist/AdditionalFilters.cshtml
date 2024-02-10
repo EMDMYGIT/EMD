@@ -1,0 +1,171 @@
+﻿@model Person
+@{
+    ViewBag.Title = "Datalist additional filters";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="example content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-bars"></i>
+                    Autocomplete
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+                    @Html.TextBox("AutocompleteIncome", null, new { @class = "form-control centered-content", placeholder = "Income" })
+                    <br />
+                    @Html.AutoComplete("Autocomplete", new PeopleDatalist { AdditionalFilters = new List<String> { "AutocompleteIncome" } })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-bars"></i>
+                    Datalist
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+                    @Html.TextBox("DatalistIncome", null, new { @class = "form-control centered-content", placeholder = "Income" })
+                    <br />
+                    @Html.Datalist("Datalist", new PeopleDatalist { AdditionalFilters = new List<String> { "DatalistIncome" } })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@Html.TextBox(<span class="str">"Income"</span>)
+@@Html.AutocompleteFor(model => model.Id, <span class="kwd">new</span> <span class="cls">PeopleDatalist</span>())
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@Html.TextBox(<span class="str">"Income"</span>)
+@@Html.DatalistFor(model => model.Id, <span class="kwd">new</span> <span class="cls">PeopleDatalist</span>())
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Controller
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public class</span> <span class="cls">HomeController</span> : <span class="cls">Controller</span>
+{
+    <span class="kwd">private</span> <span class="cls">DbContext</span> Context { <span class="kwd">get</span>; }
+
+    <span class="kwd">public</span> HomeController(<span class="cls">DbContext</span> context)
+    {
+        Context = context;
+    }
+
+    [<span class="cls">HttpGet</span>]
+    <span class="kwd">public</span> <span class="cls">ActionResult</span> Index()
+    {
+        <span class="kwd">return</span> View();
+    }
+
+    [<span class="cls">HttpGet</span>]
+    <span class="kwd">public</span> <span class="cls">JsonResult</span> AllPeople(<span class="cls">DatalistFilter</span> filter, <span class="cls">Int32</span>? income)
+    {
+        filter.AdditionalFilters[<span class="str">"Income"</span>] = income;
+
+        <span class="kwd">return</span> Json(<span class="kwd">new</span> <span class="cls">PeopleDatalist</span>(Context) { Filter = filter }.GetData());
+    }
+}
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    PeopleDatalist
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public class</span> <span class="cls">PeopleDatalist</span> : <span class="cls">MvcDatalist</span>&lt;<span class="cls">Person</span>&gt;
+{
+    <span class="kwd">private</span> <span class="cls">DbContext</span> Context { <span class="kwd">get</span>; }
+
+    <span class="kwd">public</span> PeopleDatalist(<span class="cls">DbContext</span> context)
+    {
+        Context = context;
+    }
+    <span class="kwd">public</span> PeopleDatalist()
+    {
+        Url = <span class="str">"AllPeople"</span>;
+        AdditionalFilters.Add(<span class="str">"Income"</span>);
+    }
+
+    <span class="kwd">public override</span> <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt; GetModels()
+    {
+        <span class="kwd">return</span> Context.Set&lt;<span class="cls">Person</span>&gt;();
+    }
+}
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

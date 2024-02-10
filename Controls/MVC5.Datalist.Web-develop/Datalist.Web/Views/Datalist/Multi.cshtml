@@ -1,0 +1,82 @@
+﻿@model Person
+@{
+    ViewBag.Title = "Datalist multi selection";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="example content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-bars"></i>
+                    Multi autocomplete
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+                    @Html.AutoComplete("MultiAutocomplete", new PeopleDatalist { Multi = true })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-bars"></i>
+                    Multi datalist
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+                    @Html.Datalist("MultiDatalist", new PeopleDatalist { Multi = true })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@Html.AutocompleteFor(model => model.Ids, <span class="kwd">new</span> <span class="cls">PeopleDatalist</span> { Multi = <span class="kwd">true</span> })
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@Html.DatalistFor(model => model.Ids, <span class="kwd">new</span> <span class="cls">PeopleDatalist</span> { Multi = <span class="kwd">true</span> })
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,187 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="javascript:void" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="keywords" content="grid,table,ajax,mvc,mvc5" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Grid controls for ASP.NET MVC projects.">
+    <title>@ViewBag.Title</title>
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    @Styles.Render("~/content/page/bundle")
+</head>
+<body class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="sidebar logo">
+                <a href="https://github.com/NonFactors/MVC5.Grid">
+                    <img src="@Url.Content("~/Images/github.png")" alt="" width="80" height="80" />
+                    <span class="version">v@(typeof(IGrid).Assembly.GetName().Version)</span>
+                </a>
+            </div>
+            <div class="sidebar-search content-block">
+                @Html.TextBox("SearchInput", null, new { placeholder = "Search..." })
+            </div>
+            <div class="sidebar content-block">
+                <ul>
+                    <li>
+                        @Html.ActionLink("Quick start", "Index", "Home")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Installation", "Installation", "Home")
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar content-block">
+                <ul>
+                    <li>
+                        @Html.ActionLink("Grid global search", "GlobalSearch", "Grid")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Grid filtering", "Filtering", "Grid")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Grid multi filtering", "MultiFiltering", "Grid")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Grid sorting", "Sorting", "Grid")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Grid paging", "Paging", "Grid")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Grid manual paging", "ManualPaging", "Grid")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Grid html attributes", "HtmlAttributes", "Grid")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Grid styling", "Styling", "Grid")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Grid row styling", "RowStyling", "Grid")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Grid row processing", "RowProcessing", "Grid")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Grid no data found text", "EmptyText", "Grid")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Multiple grids", "Multiple", "Grid")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Grid localization", "Localization", "Grid")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Grid custom partial", "Partial", "Grid")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Grid data page export", "Export", "Grid")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Ajax grid", "Ajax", "Grid", new { mainParam = "mainValue" }, null)
+                    </li>
+                    <li>
+                        @Html.ActionLink("Grid footer", "Footer", "Grid")
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar content-block">
+                <ul>
+                    <li>
+                        @Html.ActionLink("Column value rendering", "RenderingValue", "Column")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Column value formatting", "Formatting", "Column")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Column html encoding", "Encoding", "Column")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Column header title", "Title", "Column")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Column value filtering", "Filtering", "Column")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Column custom filter", "CustomFilter", "Column")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Column multi value filtering", "MultiFiltering", "Column")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Column initial sort order", "InitialSort", "Column")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Column first sort order", "FirstSort", "Column")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Column value sorting", "Sorting", "Column")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Column styling", "Styling", "Column")
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar content-block">
+                <ul>
+                    <li>
+                        @Html.ActionLink("Pager selectable rows per page", "SelectableRowsPerPage", "Pager")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Pager pages to display", "PagesToDisplay", "Pager")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Pager rows per page", "RowsPerPage", "Pager")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Pager initial page", "CurrentPage", "Pager")
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar content-block">
+                <ul>
+                    <li>
+                        @Html.ActionLink("Reloading grid with post data", "RequestType", "Javascript")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Binding row clicked event", "RowClicked", "Javascript")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Binding reload events", "ReloadEvents", "Javascript")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Reloading ajax grid", "Reload", "Javascript")
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar content-block">
+                <ul>
+                    <li>
+                        @Html.ActionLink("Filter registration", "Register", "Filter")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Filter unregistration", "Unregister", "Filter")
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar content-block">
+                <ul>
+                    <li>
+                        @Html.ActionLink("Grid configuration", "Configuration", "Grid")
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-10 content">
+            @RenderBody()
+        </div>
+    </div>
+
+    @Scripts.Render("~/scripts/page/bundle")
+    @RenderSection("scripts", false)
+</body>
+</html>

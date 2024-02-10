@@ -1,0 +1,8 @@
+C:\Programació\Projects\Controls\GridMvc\GridMvc\obj\Debug\GridMvc.csprojResolveAssemblyReference.cache
+C:\Programació\Projects\Controls\GridMvc\GridMvc\obj\Debug\GridMvc.Resources.Strings.resources
+C:\Programació\Projects\Controls\GridMvc\GridMvc\obj\Debug\GridMvc.Resources.Strings.it.resources
+C:\Programació\Projects\Controls\GridMvc\GridMvc\obj\Debug\GridMvc.Resources.Strings.es.resources
+C:\Programació\Projects\Controls\GridMvc\GridMvc\obj\Debug\GridMvc.Resources.Strings.de.resources
+C:\Programació\Projects\Controls\GridMvc\GridMvc\obj\Debug\GridMvc.Resources.Strings.fr.resources
+C:\Programació\Projects\Controls\GridMvc\GridMvc\obj\Debug\GridMvc.Resources.Strings.ru.resources
+C:\Programació\Projects\Controls\GridMvc\GridMvc\obj\Debug\GridMvc.csproj.GenerateResource.Cache

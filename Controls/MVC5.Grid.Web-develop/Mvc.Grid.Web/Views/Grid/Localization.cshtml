@@ -1,0 +1,137 @@
+﻿@model IEnumerable<PersonModel>
+
+@{
+    ViewBag.Title = "MVC.Grid localization";
+}
+
+<div class="example content-block">
+    <div class="widget">
+        <div class="widget-header">
+            <h1>
+                <i class="fa fa-bars"></i>
+                Localizing grid
+                <span class="widget-buttons">
+                    <i class="content-toggle"></i>
+                </span>
+            </h1>
+        </div>
+        <div class="widget-content">
+            @(Html
+                .Grid(Model)
+                .Build(columns =>
+                {
+                    columns.Add(model => model.Name).Titled("Nom");
+                    columns.Add(model => model.Surname).Titled("Nom de famille");
+
+                    columns.Add(model => model.Age).Titled("Âge");
+                    columns.Add(model => model.Birthday).Titled("Date de naissance");
+                    columns.Add(model => model.IsWorking).Titled("Employé");
+                })
+                .MultiFilterable()
+                .Filterable()
+                .Sortable()
+            )
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IEnumerable</span>&lt;<span class="cls">PersonModel</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Nom"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Nom de famille"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Âge"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Date de naissance"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employé"</span>);
+    })
+    .MultiFilterable()
+    .Filterable()
+    .Sortable()
+)
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Javascript
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+&lt;script&gt;
+    $.fn.mvcgrid.lang = {
+        Text: {
+            Contains: <span class="str">'Contient'</span>,
+            NotEquals: <span class="str">'Pas égal'</span>,
+            Equals: <span class="str">'Egale'</span>,
+            StartsWith: <span class="str">'Commence par'</span>,
+            EndsWith: <span class="str">'Fini par'</span>
+        },
+        Number: {
+            Equals: <span class="str">'Egale'</span>,
+            NotEquals: <span class="str">'Pas égal'</span>,
+            LessThan: <span class="str">'Inférieur à'</span>,
+            GreaterThan: <span class="str">'Supérieur à'</span>,
+            LessThanOrEqual: <span class="str">'Inférieur ou égale à'</span>,
+            GreaterThanOrEqual: <span class="str">'Supérieur ou égale à'</span>
+        },
+        Date: {
+            Equals: <span class="str">'Egale'</span>,
+            NotEquals: <span class="str">'Pas égal'</span>,
+            LessThan: <span class="str">'Inférieur à'</span>,
+            GreaterThan: <span class="str">'Supérieur à'</span>,
+            LessThanOrEqual: <span class="str">'Inférieur ou égale à'</span>,
+            GreaterThanOrEqual: <span class="str">'Supérieur ou égale à'</span>
+        },
+        Boolean: {
+            Yes: <span class="str">'Oui'</span>,
+            No: <span class="str">'Non'</span>
+        },
+        Filter: {
+            Apply: <span class="str">'&#10004;'</span>,
+            Remove: <span class="str">'&#10008;'</span>
+        },
+        Operator: {
+            Select: '',
+            And: <span class="str">'et'</span>,
+            Or: <span class="str">'ou'</span>
+        }
+    };
+&lt;/script&gt;
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/MvcGrid/Cultures/mvc-grid.culture.fr.js"></script>
+}

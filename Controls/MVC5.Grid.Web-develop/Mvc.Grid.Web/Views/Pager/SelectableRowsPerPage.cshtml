@@ -1,0 +1,183 @@
+﻿@model IEnumerable<PersonModel>
+
+@{
+    ViewBag.Title = "MVC.Grid selectable pager rows per page";
+}
+
+<div class="example content-block">
+    <div class="widget">
+        <div class="widget-header">
+            <h1>
+                <i class="fa fa-bars"></i>
+                Selecting pager rows per page
+                <span class="widget-buttons">
+                    <i class="content-toggle"></i>
+                </span>
+            </h1>
+        </div>
+        <div class="widget-content">
+            @(Html
+                .Grid(Model)
+                .Build(columns =>
+                {
+                    columns.Add(model => model.Name).Titled("Name");
+                    columns.Add(model => model.Surname).Titled("Surname");
+
+                    columns.Add(model => model.Age).Titled("Age");
+                    columns.Add(model => model.Birthday).Titled("Birth date");
+                    columns.Add(model => model.IsWorking).Titled("Employed");
+                })
+                .Pageable(pager =>
+                {
+                    pager.PartialViewName = "_PagerWithRows";
+                    pager.RowsPerPage = 2;
+                })
+            )
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Controller
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+[<span class="cls">HttpGet</span>]
+<span class="kwd">public</span> <span class="cls">ActionResult</span> Index()
+{
+    <span class="kwd">using</span> (<span class="cls">DbContext</span> context = new <span class="cls">ApplicationContext</span>())
+        <span class="kwd">return</span> View(context.Set&lt;<span class="cls">PersonModel</span>&gt;().OrderBy(model => model.Id));
+
+    <span class="com">// Only has to be ordered in database query scenarios with paging enabled</span>
+}
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IEnumerable</span>&lt;<span class="cls">PersonModel</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birth date"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .Pageable(pager =>
+    {
+        pager.PartialViewName = <span class="str">"_PagerWithRows"</span>;
+        pager.RowsPerPage = 2;
+    })
+)
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="example-code content-block">
+    <div class="widget">
+        <div class="widget-header">
+            <i class="fa fa-code"></i>
+            _PagerWithRows partial
+            <span class="widget-buttons">
+                <i class="content-toggle"></i>
+            </span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+@@model IGridPager
+@@{
+    Int32 totalPages = Model.TotalPages;
+    Int32 currentPage = Model.CurrentPage;
+    Int32 firstDisplayPage = Model.FirstDisplayPage;
+}
+
+&lt;div class="mvc-grid-pager @@Model.CssClasses"&gt;
+    @@if (totalPages &gt; 1)
+    {
+        &lt;ul class="pagination"&gt;
+            @@if (currentPage &gt; 1)
+            {
+                &lt;li data-page="1"&gt;&lt;span&gt;&laquo;&lt;/span&gt;&lt;/li&gt;
+                &lt;li data-page="@@(currentPage - 1)"&gt;&lt;span&gt;&lsaquo;&lt;/span&gt;&lt;/li&gt;
+            }
+            else
+            {
+                &lt;li class="disabled"&gt;&lt;span&gt;&laquo;&lt;/span&gt;&lt;/li&gt;
+                &lt;li class="disabled"&gt;&lt;span&gt;&lsaquo;&lt;/span&gt;&lt;/li&gt;
+            }
+            @@for (Int32 page = firstDisplayPage; page &lt;= totalPages && page &lt; firstDisplayPage + Model.PagesToDisplay; page++)
+            {
+                if (page == currentPage)
+                {
+                    &lt;li class="active" data-page="@@page"&gt;&lt;span&gt;@@page&lt;/span&gt;&lt;/li&gt;
+                }
+                else
+                {
+                    &lt;li data-page="@@page"&gt;&lt;span&gt;@@page&lt;/span&gt;&lt;/li&gt;
+                }
+            }
+            @@if (currentPage &lt; totalPages)
+            {
+                &lt;li data-page="@@(currentPage + 1)"&gt;&lt;span&gt;&rsaquo;&lt;/span&gt;&lt;/li&gt;
+                &lt;li data-page="@@totalPages"&gt;&lt;span&gt;&raquo;&lt;/span&gt;&lt;/li&gt;
+            }
+            else
+            {
+                &lt;li class="disabled"&gt;&lt;span&gt;&rsaquo;&lt;/span&gt;&lt;/li&gt;
+                &lt;li class="disabled"&gt;&lt;span&gt;&raquo;&lt;/span&gt;&lt;/li&gt;
+            }
+        &lt;/ul&gt;
+        &lt;div class="rows-per-page"&gt;
+            &lt;select class="mvc-grid-pager-rows"&gt;
+                @@for (Int32 i = 1; i &lt;= 3; i++)
+                {
+                    if (Model.RowsPerPage == i)
+                    {
+                        &lt;option value="@@i" selected&gt;@@i&lt;/option&gt;
+                    }
+                    else
+                    {
+                        &lt;option value="@@i"&gt;@@i&lt;/option&gt;
+                    }
+                }
+            &lt;/select&gt;
+        &lt;/div&gt;
+    }
+&lt;/div&gt;
+</code>
+</pre>
+        </div>
+    </div>
+</div>

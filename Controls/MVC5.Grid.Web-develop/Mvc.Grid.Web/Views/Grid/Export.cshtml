@@ -1,0 +1,133 @@
+﻿@model IGrid<PersonModel>
+
+@{
+    ViewBag.Title = "MVC.Grid data page export";
+}
+
+<div class="example content-block">
+    <div class="widget">
+        <div class="widget-header">
+            <h1>
+                <i class="fa fa-bars"></i>
+                Exporting grid page data
+                <span class="widget-buttons">
+                    <a class="fa fa-file-excel-o" href="@(Url.Action("GetExport") + "?" + Request.QueryString)"></a>
+                    <i class="content-toggle"></i>
+                </span>
+            </h1>
+        </div>
+        <div class="widget-content">
+            @(new HtmlGrid<PersonModel>(Html, Model))
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Controller
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+    <code>
+[<span class="cls">HttpGet</span>]
+<span class="kwd">public</span> <span class="cls">ActionResult</span> Index()
+{
+    <span class="kwd">return</span> View(CreateExportableGrid());
+}
+
+[<span class="cls">HttpGet</span>]
+<span class="kwd">public</span> <span class="cls">ActionResult</span> ExportIndex()
+{
+    <span class="com">// Using EPPlus from nuget</span>
+    <span class="kwd">using</span> (<span class="cls">ExcelPackage</span> package = new <span class="cls">ExcelPackage</span>())
+    {
+        <span class="cls">Int32</span> row = 2;
+        <span class="cls">Int32</span> col = 1;
+
+        package.Workbook.Worksheets.Add(<span class="str">"Data"</span>);
+        <span class="cls">IGrid</span>&lt;<span class="cls">PersonModel</span>&gt; grid = CreateExportableGrid();
+        <span class="cls">ExcelWorksheet</span> sheet = package.Workbook.Worksheets[<span class="str">"Data"</span>];
+
+        <span class="kwd">foreach</span> (<span class="cls">IGridColumn</span> column <span class="kwd">in</span> grid.Columns)
+        {
+            sheet.Cells[1, col].Value = column.Title;
+            sheet.Column(col++).Width = 18;
+        }
+
+        <span class="kwd">foreach</span> (<span class="cls">IGridRow&lt;PersonModel&gt;</span> gridRow <span class="kwd">in</span> grid.Rows)
+        {
+            col = 1;
+            <span class="kwd">foreach</span> (<span class="cls">IGridColumn</span> column <span class="kwd">in</span> grid.Columns)
+                sheet.Cells[row, col++].Value = column.ValueFor(gridRow);
+
+            row++;
+        }
+
+        Response.AppendHeader(<span class="str">"Content-Disposition"</span>, <span class="str">"attachment; filename=\"Export.xlsx\"</span>);
+
+        return File(package.GetAsByteArray(), <span class="str">"application/unknown"</span>);
+    }
+}
+
+<span class="kwd">private</span> <span class="cls">IGrid</span>&lt;<span class="cls">PersonModel</span>&gt; CreateExportableGrid()
+{
+    <span class="cls">IGrid</span>&lt;<span class="cls">PersonModel</span>&gt; grid = <span class="kwd">new</span> <span class="cls">Grid</span>&lt;<span class="cls">PersonModel</span>&gt;(PeopleRepository.GetPeople());
+    grid.Query = <span class="kwd">new</span> <span class="cls">NameValueCollection</span>(Request.QueryString);
+
+    grid.Columns.Add(model =&gt; model.Name).Titled(<span class="str">"Name"</span>);
+    grid.Columns.Add(model =&gt; model.Surname).Titled(<span class="str">"Surname"</span>);
+
+    grid.Columns.Add(model =&gt; model.Age).Titled(<span class="str">"Age"</span>);
+    grid.Columns.Add(model =&gt; model.Birthday).Titled(<span class="str">"Birth date"</span>);
+    grid.Columns.Add(model =&gt; model.IsWorking).Titled(<span class="str">"Employed"</span>);
+
+    grid.Pager = <span class="kwd">new</span> <span class="cls">GridPager</span>&lt;<span class="cls">PersonModel</span>&gt;(grid);
+    grid.Processors.Add(grid.Pager);
+    grid.Pager.RowsPerPage = 6;
+
+    <span class="kwd">foreach</span> (<span class="cls">IGridColumn</span> column <span class="kwd">in</span> grid.Columns)
+    {
+        column.IsFilterable = <span class="kwd">true</span>;
+        column.IsSortable = <span class="kwd">true</span>;
+    }
+
+    <span class="kwd">return</span> grid;
+}
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IGrid</span>&lt;<span class="cls">PersonModel</span>&gt;
+
+&lt;a href="@@(Url.Action(<span class="str">"ExportIndex"</span>) + <span class="str">"?"</span> + Request.QueryString)"&gt;Export&lt;/a&gt;
+
+@@(<span class="kwd">new</span> <span class="cls">HtmlGrid</span>&lt;<span class="cls">PersonModel</span>&gt;(Html, Model))
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

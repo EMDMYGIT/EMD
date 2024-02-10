@@ -1,0 +1,122 @@
+﻿@model Person
+@{
+    ViewBag.Title = "Datalist browse";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="example content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-bars"></i>
+                    Autocomplete
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content text-center">
+                    @Html.AutoComplete("Autocomplete", new PeopleDatalist())
+                    <br />
+                    <button id="AutocompleteButton" class="btn btn-default">Browse</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-bars"></i>
+                    Datalist
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content text-center">
+                    @Html.Datalist("Datalist", new PeopleDatalist())
+                    <br />
+                    <button id="DatalistButton" class="btn btn-default">Browse</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@Html.AutocompleteFor(model => model.Id, <span class="kwd">new</span> <span class="cls">PeopleDatalist</span>())
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@Html.DatalistFor(model => model.Id, <span class="kwd">new</span> <span class="cls">PeopleDatalist</span>())
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Javascript
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+$(<span class="str">'button'</span>).on(<span class="str">'click'</span>, <span class="kwd">function</span>() {
+    $(<span class="str">'#Id'</span>).datalist(<span class="str">'browse'</span>);
+});
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+<script>
+    $('#AutocompleteButton').on('click', function () {
+        $('#Autocomplete').datalist('browse');
+    });
+
+    $('#DatalistButton').on('click', function () {
+        $('#Datalist').datalist('browse');
+    });
+</script>
+}

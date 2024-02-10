@@ -1,0 +1,89 @@
+﻿@model IEnumerable<PersonModel>
+
+@{
+    ViewBag.Title = "MVC.Grid configuration";
+}
+
+<div class="example content-block">
+    <div class="widget">
+        <div class="widget-header">
+            <h1>
+                <i class="fa fa-bars"></i>
+                Grid javascript configuration api
+                <span class="widget-buttons">
+                    <i class="content-toggle"></i>
+                </span>
+            </h1>
+        </div>
+        <div class="widget-content">
+            @(Html
+                .Grid(Model)
+                .Build(columns =>
+                {
+                    columns.Add(model => model.Name).Titled("Name");
+                    columns.Add(model => model.Surname).Titled("Surname");
+
+                    columns.Add(model => model.Age).Titled("Age");
+                    columns.Add(model => model.Birthday).Titled("Birth date");
+                    columns.Add(model => model.IsWorking).Titled("Employed");
+                })
+                .Pageable(pager =>
+                {
+                    pager.RowsPerPage = 4;
+                })
+                .Filterable()
+                .Sortable()
+            )
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Javascript
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+$(<span class="str">'.mvc-grid'</span>).mvcgrid({
+    sourceUrl: <span class="str">'IndexGrid'</span>, <span class="com">// Grid source url string</span>
+    query: <span class="str">'?search=test'</span>, <span class="com">// Grid query string</span>
+    requestType: <span class="str">'get'</span>, <span class="com">// Ajax grid request type</span>
+    data: {
+        <span class="com">// Ajax grid query data</span> 
+    },
+    filters: {
+        <span class="com">// Grid filters to extend or use</span>
+        <span class="str">'Boolean'</span>: <span class="kwd">new</span> CustomBooleanFilter()
+    },
+    reload: <span class="kwd">false</span>, <span class="com">// Grid reload indicator</span>
+    rowClicked: <span class="kwd">function</span>(grid, row, data, e) {
+        <span class="com">// grid - grid instance which invoked the event</span>
+        <span class="com">// row - DOM element</span>
+        <span class="com">// data - clicked row's data from all bound columns</span>
+        <span class="com">// e - native row click event</span>
+    },
+    reloadStarted: <span class="kwd">function</span>() {    
+        <span class="com">// Event called before grid reload is started</span>
+    },
+    reloadEnded: <span class="kwd">function</span>() {    
+        <span class="com">// Event called after grid reload is finished</span>
+    },
+    reloadFailed: <span class="kwd">function</span>() {    
+        <span class="com">// Event called after grid reload has failed</span>
+    }
+});
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

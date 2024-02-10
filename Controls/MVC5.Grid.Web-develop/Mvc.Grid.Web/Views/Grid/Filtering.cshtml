@@ -1,0 +1,66 @@
+﻿@model IEnumerable<PersonModel>
+
+@{
+    ViewBag.Title = "MVC.Grid filtering";
+}
+
+<div class="example content-block">
+    <div class="widget">
+        <div class="widget-header">
+            <h1>
+                <i class="fa fa-bars"></i>
+                Filtering grid data
+                <span class="widget-buttons">
+                    <i class="content-toggle"></i>
+                </span>
+            </h1>
+        </div>
+        <div class="widget-content">
+            @(Html
+                .Grid(Model)
+                .Build(columns =>
+                {
+                    columns.Add(model => model.Name).Titled("Name").Filterable(false);
+                    columns.Add(model => model.Surname).Titled("Surname").Filterable(false);
+
+                    columns.Add(model => model.Age).Titled("Age").Filterable(true);
+                    columns.Add(model => model.Birthday).Titled("Birth date");
+                    columns.Add(model => model.IsWorking).Titled("Employed");
+                })
+                .Filterable()
+            )
+        </div>
+    </div>
+</div>
+<div class="example-code content-block">
+    <div class="widget">
+        <div class="widget-header">
+            <i class="fa fa-code"></i>
+            View
+            <span class="widget-buttons">
+                <i class="content-toggle"></i>
+            </span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IEnumerable</span>&lt;<span class="cls">PersonModel</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>).Filterable(<span class="kwd">false</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>).Filterable(<span class="kwd">false</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>).Filterable(<span class="kwd">true</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birth date"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .Filterable()
+)
+</code>
+</pre>
+        </div>
+    </div>
+</div>

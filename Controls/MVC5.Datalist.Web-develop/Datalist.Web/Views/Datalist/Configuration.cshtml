@@ -1,0 +1,165 @@
+﻿@model Person
+@{
+    ViewBag.Title = "Datalist configuration";
+}
+
+<div class="row">
+    <div class="col-md-12 col-lg-4">
+        <div class="example content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-bars"></i>
+                    Autocomplete
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+                    @Html.AutoComplete("Autocomplete", new PeopleDatalist())
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-4">
+        <div class="example content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-bars"></i>
+                    Datalist
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+                    @Html.Datalist("Datalist", new PeopleDatalist())
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-4">
+        <div class="example content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-bars"></i>
+                    Multi datalist
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+                    @Html.Datalist("MultiDatalist", new PeopleDatalist() { Multi = true })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-lg-4">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@Html.AutocompleteFor(model => model.Id, <span class="kwd">new</span> <span class="cls">PeopleDatalist</span>())
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-4">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@Html.DatalistFor(model => model.Id, <span class="kwd">new</span> <span class="cls">PeopleDatalist</span>())
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-4">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@Html.DatalistFor(model => model.Ids, <span class="kwd">new</span> <span class="cls">PeopleDatalist</span>())
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Javascript
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+$(<span class="str">'.datalist'</span>).datalist({
+    readonly: <span class="kwd">false</span>, <span class="com">// Datalist readonly state</span>
+    events: {
+        select: <span class="kwd">function</span> (e, data, triggerChanges) {
+            <span class="com">// e - datalist select event, preventing the default, prevents default datalist selection logic</span>
+            <span class="com">// data - an array of selected data</span>
+            <span class="com">// triggerChanges - a boolean specifying if input changes should be triggered</span>
+        },
+        filterChange: <span class="kwd">function</span> (e) {
+            <span class="com">// e - input event which triggered the change, preventing the default, prevents default datalist filter change logic</span>
+        }
+    },
+    autocomplete: {
+        <span class="com">// JQuery UI autocomplete options</span>
+    },
+    dialog: {
+        <span class="com">// JQuery UI dialog options</span>
+    },
+    spinner: {
+        <span class="com">// JQuery UI spinner options</span>
+    },
+    resizable: {
+        <span class="com">// JQuery UI resizable options</span>
+    }
+});
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

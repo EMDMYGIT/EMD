@@ -1,0 +1,251 @@
+﻿@model IEnumerable<PersonModel>
+
+@{
+    ViewBag.Title = "MVC.Grid custom column filter";
+}
+
+<div class="example content-block">
+    <div class="widget">
+        <div class="widget-header">
+            <h1>
+                <i class="fa fa-bars"></i>
+                Filtering column with a custom filter
+                <span class="widget-buttons">
+                    <i class="content-toggle"></i>
+                </span>
+            </h1>
+        </div>
+        <div class="widget-content">
+            @(Html
+                .Grid(Model)
+                .Build(columns =>
+                {
+                    columns.Add(model => model.Name).Titled("Name").Filterable(true).FilteredAs("Custom");
+                    columns.Add(model => model.Surname).Titled("Surname").Filterable(true).MultiFilterable(true).FilteredAs("Custom");
+
+                    columns.Add(model => model.Age).Titled("Age");
+                    columns.Add(model => model.Birthday).Titled("Birth date");
+                    columns.Add(model => model.IsWorking).Titled("Employed");
+                })
+            )
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IEnumerable</span>&lt;<span class="cls">PersonModel</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>).Filterable(<span class="kwd">true</span>).FilteredAs(<span class="str">"Custom"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>).Filterable(<span class="kwd">true</span>)
+            .MultiFilterable(<span class="kwd">true</span>).FilteredAs(<span class="str">"Custom"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birth day"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+)
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Javascript
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">var</span> CustomTextFilter = (<span class="kwd">function</span> () {
+    <span class="kwd">function</span> CustomTextFilter() {
+    }
+
+    CustomTextFilter.prototype = {
+        render: <span class="kwd">function</span> (grid, popup, filter) {
+            popup.html(
+                <span class="str">'&lt;div class="popup-arrow"&gt;&lt;/div&gt;'</span> +
+                <span class="str">'&lt;div class="popup-content"&gt;'</span> +
+                    <span class="str">'&lt;div class="first-filter popup-group"&gt;'</span> +
+                        <span class="str">'&lt;input class="mvc-grid-input" placeholder="Contains" type="text" value="'</span> + filter.first.val + <span class="str">'"&gt;'</span> +
+                    <span class="str">'&lt;/div&gt;'</span> +
+                    (filter.isMulti ?
+                    <span class="str">'&lt;div class="popup-group popup-group-operator"&gt;'</span> +
+                        <span class="str">'&lt;select class="mvc-grid-operator"&gt;'</span> +
+                            <span class="str">'&lt;option value=""&gt;&lt;/option&gt;'</span> +
+                            <span class="str">'&lt;option value="And"'</span> + (filter.operator == <span class="str">'And'</span> ? <span class="str">' selected="selected"'</span> : <span class="str">''</span>) + <span class="str">'&gt;And&lt;/option&gt;'</span> +
+                            <span class="str">'&lt;option value="Or"'</span> + (filter.operator == <span class="str">'Or'</span> ? <span class="str">' selected="selected"'</span> : <span class="str">''</span>) + <span class="str">'&gt;Or&lt;/option&gt;'</span> +
+                        <span class="str">'&lt;/select&gt;'</span> +
+                    <span class="str">'&lt;/div&gt;'</span> +
+                    <span class="str">'&lt;div class="second-filter popup-group"&gt;'</span> +
+                        <span class="str">'&lt;input class="mvc-grid-input" placeholder="Contains" type="text" value="'</span> + filter.second.val + <span class="str">'"&gt;'</span> +
+                    <span class="str">'&lt;/div&gt;'</span> :
+                    '') +
+                    <span class="str">'&lt;div class="popup-button-group"&gt;'</span> +
+                        <span class="str">'&lt;button class="btn btn-success mvc-grid-apply" type="button"&gt;&#10004;&lt;/button&gt;'</span> +
+                        <span class="str">'&lt;button class="btn btn-danger mvc-grid-cancel" type="button"&gt;&#10008;&lt;/button&gt;'</span> +
+                    <span class="str">'&lt;/div&gt;'</span> +
+                <span class="str">'&lt;/div&gt;'</span>);
+        },
+
+        init: <span class="kwd">function</span> (grid, column, popup) {
+            <span class="kwd">this</span>.bindValue(grid, column, popup);
+            <span class="kwd">this</span>.bindApply(grid, column, popup);
+            <span class="kwd">this</span>.bindCancel(grid, column, popup);
+        },
+        bindValue: <span class="kwd">function</span> (grid, column, popup) {
+            <span class="kwd">var</span> inputs = popup.find(<span class="str">'.mvc-grid-input'</span>);
+            inputs.on(<span class="str">'keyup.mvcgrid'</span>, <span class="kwd">function</span> (e) {
+                <span class="kwd">if</span> (e.which == 13) {
+                    popup.find(<span class="str">'.mvc-grid-apply'</span>).click();
+                }
+            });
+        },
+        bindApply: <span class="kwd">function</span> (grid, column, popup) {
+            <span class="kwd">var</span> apply = popup.find(<span class="str">'.mvc-grid-apply'</span>);
+            apply.on(<span class="str">'click.mvcgrid'</span>, <span class="kwd">function</span> () {
+                popup.removeClass(<span class="str">'open'</span>);
+                column.filter.first.type = <span class="str">'Contains'</span>;
+                column.filter.second.type = <span class="str">'Contains'</span>;
+                column.filter.operator = popup.find(<span class="str">'.mvc-grid-operator'</span>).val();
+                column.filter.first.val = popup.find(<span class="str">'.first-filter .mvc-grid-input'</span>).val();
+                column.filter.second.val = popup.find(<span class="str">'.second-filter .mvc-grid-input'</span>).val();
+
+                grid.applyFilter(column);
+                grid.reload();
+            });
+        },
+        bindCancel: <span class="kwd">function</span> (grid, column, popup) {
+            <span class="kwd">var</span> cancel = popup.find(<span class="str">'.mvc-grid-cancel'</span>);
+            cancel.on(<span class="str">'click.mvcgrid'</span>, <span class="kwd">function</span> () {
+                popup.removeClass(<span class="str">'open'</span>);
+
+                if (column.filter.first.type || column.filter.second.type) {
+                    grid.cancelFilter(column);
+                    grid.reload();
+                }
+            });
+        }
+    };
+
+    <span class="kwd">return</span> CustomTextFilter;
+})();
+
+$(<span class="str">'.mvc-grid'</span>).mvcgrid({
+    filters: {
+        <span class="str">'Custom'</span>: <span class="kwd">new</span> CustomTextFilter()
+    }
+});
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+<script>
+    var CustomTextFilter = (function () {
+        function CustomTextFilter() {
+        }
+
+        CustomTextFilter.prototype = {
+            render: function (grid, popup, filter) {
+                popup.html(
+                    '<div class="popup-arrow"></div>' +
+                    '<div class="popup-content">' +
+                        '<div class="first-filter popup-group">' +
+                            '<input class="mvc-grid-input" placeholder="Contains" type="text" value="' + filter.first.val + '">' +
+                        '</div>' +
+                        (filter.isMulti ?
+                        '<div class="popup-group popup-group-operator">' +
+                            '<select class="mvc-grid-operator">' +
+                                '<option value=""></option>' +
+                                '<option value="And"' + (filter.operator == 'And' ? ' selected="selected"' : '') + '>And</option>' +
+                                '<option value="Or"' + (filter.operator == 'Or' ? ' selected="selected"' : '') + '>Or</option>' +
+                            '</select>' +
+                        '</div>' +
+                        '<div class="second-filter popup-group">' +
+                            '<input class="mvc-grid-input" placeholder="Contains" type="text" value="' + filter.second.val + '">' +
+                        '</div>' :
+                        '') +
+                        '<div class="popup-button-group">' +
+                            '<button class="btn btn-success mvc-grid-apply" type="button">✔</button>' +
+                            '<button class="btn btn-danger mvc-grid-cancel" type="button">✘</button>' +
+                        '</div>' +
+                    '</div>');
+            },
+
+            init: function (grid, column, popup) {
+                this.bindValue(grid, column, popup);
+                this.bindApply(grid, column, popup);
+                this.bindCancel(grid, column, popup);
+            },
+            bindValue: function (grid, column, popup) {
+                var inputs = popup.find('.mvc-grid-input');
+                inputs.on('keyup.mvcgrid', function (e) {
+                    if (e.which == 13) {
+                        popup.find('.mvc-grid-apply').click();
+                    }
+                });
+            },
+            bindApply: function (grid, column, popup) {
+                var apply = popup.find('.mvc-grid-apply');
+                apply.on('click.mvcgrid', function () {
+                    popup.removeClass('open');
+                    column.filter.first.type = 'Contains';
+                    column.filter.second.type = 'Contains';
+                    column.filter.operator = popup.find('.mvc-grid-operator').val();
+                    column.filter.first.val = popup.find('.first-filter .mvc-grid-input').val();
+                    column.filter.second.val = popup.find('.second-filter .mvc-grid-input').val();
+
+                    grid.applyFilter(column);
+                    grid.reload();
+                });
+            },
+            bindCancel: function (grid, column, popup) {
+                var cancel = popup.find('.mvc-grid-cancel');
+                cancel.on('click.mvcgrid', function () {
+                    popup.removeClass('open');
+
+                    if (column.filter.first.type || column.filter.second.type) {
+                        grid.cancelFilter(column);
+                        grid.reload();
+                    }
+                });
+            }
+        };
+
+        return CustomTextFilter;
+    })();
+
+    $('.mvc-grid').mvcgrid({
+        filters: {
+            'Custom': new CustomTextFilter()
+        }
+    });
+</script>
+}

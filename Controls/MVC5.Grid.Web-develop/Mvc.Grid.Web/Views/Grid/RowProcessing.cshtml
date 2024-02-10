@@ -1,0 +1,209 @@
+﻿@using NonFactors.Mvc.Grid.Web.Processors;
+
+@model IEnumerable<PersonModel>
+
+@{
+    ViewBag.Title = "MVC.Grid row processing";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="example content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <h1>
+                        <i class="fa fa-bars"></i>
+                        Pre-processing grid rows
+                        <span class="widget-buttons">
+                            <i class="content-toggle"></i>
+                        </span>
+                    </h1>
+                </div>
+                <div class="widget-content">
+                    @(Html
+                        .Grid(Model)
+                        .Build(columns =>
+                        {
+                            columns.Add(model => model.Name).Titled("Name");
+                            columns.Add(model => model.Surname).Titled("Surname");
+
+                            columns.Add(model => model.Age).Titled("Age");
+                            columns.Add(model => model.Birthday).Titled("Birth date");
+                            columns.Add(model => model.IsWorking).Titled("Employed");
+                        })
+                        .ProcessWith(new NotWorkingPersonFilter())
+                    )
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <h1>
+                        <i class="fa fa-bars"></i>
+                        Post-processing grid rows
+                        <span class="widget-buttons">
+                            <i class="content-toggle"></i>
+                        </span>
+                    </h1>
+                </div>
+                <div class="widget-content">
+                    @(Html
+                        .Grid(Model)
+                        .Build(columns =>
+                        {
+                            columns.Add(model => model.Name).Titled("N. Surname");
+
+                            columns.Add(model => model.Age).Titled("Age");
+                            columns.Add(model => model.Birthday).Titled("Birth date");
+                            columns.Add(model => model.IsWorking).Titled("Employed");
+                        })
+                        .ProcessWith(new ShortNameProcessor())
+                    )
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IEnumerable</span>&lt;<span class="cls">PersonModel</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birth date"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .ProcessWith(<span class="kwd">new</span> <span class="cls">NotWorkingPersonFilter</span>())
+)
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IEnumerable</span>&lt;<span class="cls">PersonModel</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"N. Surname"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birth date"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .ProcessWith(<span class="kwd">new</span> <span class="cls">ShortNameProcessor</span>())
+)
+
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Not working person filter
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public class</span> <span class="cls">NotWorkingPersonFilter</span> : <span class="cls">IGridProcessor</span>&lt;<span class="cls">PersonModel</span>&gt;
+{
+    <span class="kwd">public</span> <span class="cls">GridProcessorType</span> ProcessorType { <span class="kwd">get</span>; <span class="kwd">set</span>; }
+
+    <span class="kwd">public</span> NotWorkingPersonFilter()
+    {
+        ProcessorType = <span class="cls">GridProcessorType</span>.Pre;
+    }
+
+    <span class="kwd">public</span> <span class="cls">IQueryable</span>&lt;<span class="cls">PersonModel</span>&gt; Process(<span class="cls">IQueryable</span>&lt;<span class="cls">PersonModel</span>&gt; items)
+    {
+        <span class="kwd">return</span> items.Where(item => item.IsWorking == <span class="kwd">false</span>);
+    }
+}
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Short name processor
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public class</span> <span class="cls">ShortNameProcessor</span> : <span class="cls">IGridProcessor</span>&lt;<span class="cls">PersonModel</span>&gt;
+{
+    <span class="kwd">public</span> <span class="cls">GridProcessorType</span> ProcessorType { <span class="kwd">get</span>; <span class="kwd">set</span>; }
+
+    <span class="kwd">public</span> ShortNameProcessor()
+    {
+        ProcessorType = <span class="cls">GridProcessorType</span>.Post;
+    }
+
+    <span class="kwd">public</span> <span class="cls">IQueryable</span>&lt;<span class="cls">PersonModel</span>&gt; Process(<span class="cls">IQueryable</span>&lt;<span class="cls">PersonModel</span>&gt; items)
+    {
+        <span class="kwd">foreach</span> (<span class="cls">PersonModel</span> person <span class="kwd">in</span> items)
+                person.Name = person.Name.Substring(0, 1) + <span class="str">". "</span> + person.Surname;
+
+        <span class="kwd">return</span> items;
+    }
+}
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

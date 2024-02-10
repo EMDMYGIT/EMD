@@ -1,0 +1,14 @@
+C:\Programació\Projects\Controls\MVC5.Datalist-develop\src\Datalist.Core\bin\Debug\net45\Datalist.Core.dll
+C:\Programació\Projects\Controls\MVC5.Datalist-develop\src\Datalist.Core\bin\Debug\net45\Datalist.Core.pdb
+C:\Programació\Projects\Controls\MVC5.Datalist-develop\src\Datalist.Core\bin\Debug\net45\System.Web.Mvc.dll
+C:\Programació\Projects\Controls\MVC5.Datalist-develop\src\Datalist.Core\bin\Debug\net45\System.Web.Razor.dll
+C:\Programació\Projects\Controls\MVC5.Datalist-develop\src\Datalist.Core\bin\Debug\net45\System.Web.Helpers.dll
+C:\Programació\Projects\Controls\MVC5.Datalist-develop\src\Datalist.Core\bin\Debug\net45\System.Web.WebPages.Deployment.dll
+C:\Programació\Projects\Controls\MVC5.Datalist-develop\src\Datalist.Core\bin\Debug\net45\System.Web.WebPages.Razor.dll
+C:\Programació\Projects\Controls\MVC5.Datalist-develop\src\Datalist.Core\bin\Debug\net45\System.Web.WebPages.dll
+C:\Programació\Projects\Controls\MVC5.Datalist-develop\src\Datalist.Core\bin\Debug\net45\Microsoft.Web.Infrastructure.dll
+C:\Programació\Projects\Controls\MVC5.Datalist-develop\src\Datalist.Core\bin\Debug\net45\System.Linq.Dynamic.dll
+C:\Programació\Projects\Controls\MVC5.Datalist-develop\src\Datalist.Core\obj\Debug\net45\Datalist.Core.csprojResolveAssemblyReference.cache
+C:\Programació\Projects\Controls\MVC5.Datalist-develop\src\Datalist.Core\obj\Debug\net45\Datalist.Core.AssemblyInfo.cs
+C:\Programació\Projects\Controls\MVC5.Datalist-develop\src\Datalist.Core\obj\Debug\net45\Datalist.Core.dll
+C:\Programació\Projects\Controls\MVC5.Datalist-develop\src\Datalist.Core\obj\Debug\net45\Datalist.Core.pdb

@@ -1,0 +1,197 @@
+﻿@model IEnumerable<PersonModel>
+
+@{
+    ViewBag.Title = "MVC.Grid row clicked event binding";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="example content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <h1>
+                        <i class="fa fa-bars"></i>
+                        Binding row clicked event
+                        <span class="widget-buttons">
+                            <i class="content-toggle"></i>
+                        </span>
+                    </h1>
+                </div>
+                <div class="widget-content">
+                    @(Html
+                        .Grid(Model)
+                        .Build(columns =>
+                        {
+                            columns.Add(model => model.Name).Titled("Name").Filterable(true);
+                            columns.Add(model => model.Birthday).Titled("Birth date");
+                        })
+                        .Pageable(pager =>
+                        {
+                            pager.RowsPerPage = 3;
+                        })
+                    )
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="output content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Script output
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code class="script-output">
+
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    View
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IEnumerable</span>&lt;<span class="cls">PersonModel</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>).Filterable(<span class="kwd">true</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birth date"</span>);
+    })
+    .Pageable(pager =>
+    {
+        pager.RowsPerPage = 3;
+    })
+)
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Javascript
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+$(<span class="str">'.mvc-grid'</span>).mvcgrid({
+    rowClicked: <span class="kwd">function</span> (row, data, e) {
+        console.log(<span class="str">'data: '</span> + data);
+        console.log(<span class="str">'grid: '</span> + <span class="kwd">this</span>);
+    }
+})
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .selected {
+        background-color: #F5F5F5;
+    }
+
+    .mvc-grid tbody tr {
+        cursor: pointer;
+    }
+</style>
+
+@section scripts {
+<script>
+    $('.mvc-grid').mvcgrid({
+        rowClicked: function (row, data, e) {
+            $(row).siblings().removeClass('selected');
+            $(row).toggleClass('selected');
+
+            if ($(row).hasClass('selected')) {
+                var rowData = [];
+                var columnHtml = [];
+
+                for (var key in data) {
+                    rowData.push('    "' + key + '": "' + data[key] + '"');
+                }
+                for (var i = 0; i < this.columns.length; i++) {
+                    if (this.columns[i].filter) {
+                        columnHtml.push(
+                            '\n' +
+                            '        {\n' +
+                            '            "name": "' + this.columns[i].name + '",\n' +
+                            '            "filter": {\n' +
+                            '                "isMulti": ' + this.columns[i].filter.isMulti + ',\n' +
+                            '                "name": "' + this.columns[i].filter.name + '",\n' +
+                            '                "operator": "' + this.columns[i].filter.operator + '",\n' +
+                            '                "first": {\n' +
+                            '                    "type": "' + this.columns[i].filter.first.type + '",\n' +
+                            '                    "val": "' + this.columns[i].filter.first.val + '"\n' +
+                            '                },\n' +
+                            '                "second": {\n' +
+                            '                    "type": "' + this.columns[i].filter.second.type + '",\n' +
+                            '                    "val": "' + this.columns[i].filter.second.val + '"\n' +
+                            '                }\n' +
+                            '            }\n' +
+                            '        }');
+                    } else {
+                        columnHtml.push(
+                            '\n' +
+                            '        {\n' +
+                            '            "name": "' + this.columns[i].name + '",\n' +
+                            '            "filter": null\n' +
+                            '        }');
+                    }
+                }
+
+
+                var rowHtml = 'data: {\n' + rowData.join(',\n') + '\n}';
+                var gridHtml =
+                    'grid: {\n' +
+                    '    "name": "' + this.name + '",\n' +
+                    '    "columns": [' +
+                            columnHtml.join(',') + '\n' +
+                    '    ]\n' +
+                    '    "pager": {\n' +
+                    '        "currentPage": "' + this.pager.currentPage + '",\n' +
+                    '        "element": $Query pager element,\n' +
+                    '        "pages": $Query pager page elements,\n' +
+                    '        "rowsPerPage": $Query rows per page element,\n' +
+                    '    }\n' +
+                    '}';
+
+                $('.script-output').html(rowHtml + '\n' + gridHtml);
+            } else {
+                $('.script-output').html('');
+            }
+        }
+    })
+</script>
+}

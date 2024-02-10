@@ -1,0 +1,118 @@
+﻿﻿@model IEnumerable<PersonModel>
+
+@{
+    ViewBag.Title = "MVC.Grid reloading with post data";
+}
+
+<div class="example content-block">
+    <div class="widget">
+        <div class="widget-header">
+            <h1>
+                <i class="fa fa-bars"></i>
+                Reloading grid with post data
+                <span class="widget-buttons">
+                    <i class="content-refresh fa fa-refresh"></i>
+                    <i class="content-toggle"></i>
+                </span>
+            </h1>
+        </div>
+        <div class="widget-content">
+            @Html.AjaxGrid(Url.Action("ReloadGrid"))
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Main view
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@Html.AjaxGrid(Url.Action(<span class="str">"IndexGrid"</span>))
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Partial view
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IEnumerable</span>&lt;<span class="cls">PersonModel</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+        columns.Add(model => <span class="cls">DateTime</span>.Now).Titled(<span class="str">"Time stamp"</span>);
+    })
+)
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="example-code content-block">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code"></i>
+                    Javascript
+                    <span class="widget-buttons">
+                        <i class="content-toggle"></i>
+                    </span>
+                </div>
+                <div class="widget-content">
+<pre>
+<code>
+$(<span class="str">'.content-refresh'</span>).on(<span class="str">'click'</span>, <span class="kwd">function</span> () {
+    $(<span class="str">'.mvc-grid'</span>).mvcgrid({    
+        requestType: <span class="str">'post'</span>, <span class="com">// defaults to get</span>
+        reload: <span class="kwd">true</span>,
+        data: {
+            name: <span class="str">'Joe'</span>
+        }
+    });
+})
+</code>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+    $('.content-refresh').on('click', function () {
+        $('.mvc-grid').mvcgrid({
+            requestType: 'post',
+            reload: true,
+            data: {
+                name: 'Joe'
+            }
+        });
+    })
+    </script>
+}
