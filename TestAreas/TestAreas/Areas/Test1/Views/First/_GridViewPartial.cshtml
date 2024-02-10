@@ -1,0 +1,51 @@
+@{
+	var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridView";
+        settings.CallbackRouteValues = new { Controller = "First", Action = "GridViewPartial" };
+
+				settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "First", Action = "GridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "First", Action = "GridViewPartialUpdate" };
+@*        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "First", Action = "GridViewPartialDelete" };*@
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Name";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        //Filtros tipo Excel
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsPopup.HeaderFilter.Height = 200;
+        settings.SettingsPopup.HeaderFilter.SettingsAdaptivity.MinHeight = 300;
+            
+
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Average,"Age");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Count, "Name");
+        settings.Settings.ShowFooter = true;
+
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+            // Filtro de columna tipo check
+        settings.Columns.Add("Name").SettingsHeaderFilter.Mode=GridHeaderFilterMode.CheckedList;
+        settings.Columns.Add("Surname");
+        settings.Columns.Add("Age");
+        settings.Columns.Add("Birthday",MVCxGridViewColumnType.DateEdit);
+        settings.Columns.Add("Married",MVCxGridViewColumnType.CheckBox);
+    });
+if (ViewData["EditError"] != null)
+{
+    grid.SetEditErrorText((string)ViewData["EditError"]);
+}
+}
+@grid.Bind(Model).GetHtml()

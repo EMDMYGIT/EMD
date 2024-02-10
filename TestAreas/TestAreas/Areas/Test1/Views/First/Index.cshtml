@@ -1,0 +1,25 @@
+﻿@using TestAreas.Areas.Test1.Models
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<h3> First Controller Index view</h3>
+@*
+    @(Html.DevExtreme().DataGrid<TestAreas.Areas.Test1.Models.FirstModel>()
+        .ID("gridContainer")
+        .DataSource(Model)
+        .ShowBorders(true)
+        .Columns(c =>
+        {
+            c.Add().DataField("Name");
+            c.Add().DataField("Surname");
+            c.Add().DataField("Age");
+            c.Add().DataField("Birthday");
+        })
+*@
+
+@Html.Action("GridViewPartial")
+
+
+)

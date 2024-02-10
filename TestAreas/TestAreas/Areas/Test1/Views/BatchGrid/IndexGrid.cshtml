@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "IndexGrid";
+}
+
+<h2>IndexGrid</h2>
+
+<script type="text/javascript">
+
+    function OnBeginGridCallback(s, e) {
+        e.customArgs = MVCxClientUtils.GetSerializedEditorValuesInContainer("options");
+    }
+</script>
