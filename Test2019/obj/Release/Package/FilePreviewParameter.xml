@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="Test2019" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^G:\\Projects\\Test2019\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^G:\\Projects\\Test2019\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="SQLDEV-Web.config Connection String" description="" value="Data Source=sqlimasd.database.windows.net;Initial Catalog=TestIMASD;User ID=saimasd;Password=sqlemd_2020;Connect Timeout=60;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False" tags="">
+    <parameterEntry kind="XmlFile" scope="G:\\Projects\\Test2019\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SQLDEV']/@connectionString" />
+  </parameter>
+</parameters>

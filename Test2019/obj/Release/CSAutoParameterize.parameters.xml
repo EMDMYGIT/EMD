@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="SQLDEV-Web.config Connection String" description="SQLDEV Connection String used in web.config by the application to access the database." defaultValue="Data Source=sqlimasd.database.windows.net;Initial Catalog=TestIMASD;User ID=saimasd;Password=sqlemd_2020;Connect Timeout=60;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="G:\\Projects\\Test2019\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SQLDEV']/@connectionString" />
+  </parameter>
+</parameters>
