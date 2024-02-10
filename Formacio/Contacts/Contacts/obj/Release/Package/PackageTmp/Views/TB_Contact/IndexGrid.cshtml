@@ -1,0 +1,131 @@
+﻿@using GridMvc.Html
+@model IEnumerable<Contacts.Models.TB_Contact>
+
+@{
+    ViewBag.Title = "IndexGrid";
+}
+    <!-- Grid Filter-->
+<script>
+        $(function () {
+            // GridMvc.addFilterWidget(new CityFilter())
+            pageGrids.IndexGrid.addFilterWidget(new CustomersFilterWidget());
+       pageGrids.IndexGrid.onRowSelect(function (e) {
+        $.post("/TB_Contact/GetContact?id=" + e.row.ContactID, function (data) {
+            if (data.Status <= 0) {
+                alert(data.Message);
+                return;
+            }
+            $("#order-content").html(data.Content);
+        });
+    });
+
+    // Grid selected row to call partial view of comments
+    @* $(function () {
+        pageGrids.IndexGrid.onRowSelect(function (e) {
+            //alert(e.row.ContactID);
+            @Viewbag.SelectedRowID = e.row.ContactID
+            @Html.Action("Comments")
+        });
+        });*@
+    });
+</script>
+<!-- Grid-->
+<h2>IndexGrid</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+@Html.Grid(Model).Named("IndexGrid").Columns(columns =>
+{
+  /*
+    columns.Add() .Titled("Edit").Encoded(false).Sanitized(false).SetWidth("30%")
+     .RenderValueAs(model => (@<a href="@Url.Action("Edit", "Edit", new { id = model.ContactID })">
+                        <input type="button" class="btn btn-default" value="View" />));
+
+    */
+    columns.Add()
+    .Encoded(false)
+    .Sanitized(false)
+    .SetWidth(30)
+    .RenderValueAs(model => Html.ActionLink("Edit", "Edit", new { id = model.ContactID }));
+
+    columns.Add(model => model.ContactID).Titled("ContactID").SetWidth(10);
+    columns.Add(model => model.Name).Filterable(true);
+    columns.Add(model => model.Surname).Filterable(true);
+    columns.Add(model => model.Surname2);
+    columns.Add(model => model.e_mail);
+    columns.Add(model => model.City).Filterable(true)
+    .SetFilterWidgetType("CustomCityFilterWidget");
+    columns.Add(model => model.Country).Filterable(true);
+
+}).WithPaging(20).WithMultipleFilters().Sortable()
+
+
+<!--
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ContactID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Surname2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Telephone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.e_mail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Country)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContactID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Surname2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Telephone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.e_mail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
+    -->

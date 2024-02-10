@@ -1,0 +1,18 @@
+﻿@model IEnumerable < Contacts.Models.FiltersModels.CityFilterGrid>
+@using DBClases;
+
+@{
+    ViewBag.Title = "Data List NonFactors";
+}
+
+
+<h2>Cities</h2>
+
+<div class="widget-content">
+    @Html.Datalist("MultiDatalist",new DBClases.CityDatalist { Url = "/Datalist/AllCities", Multi = true })
+</div>
+@*
+    <div>
+        @Html.DatalistFor(model => model.CityName, < span class="kwd">new</span> <span class="cls">PeopleDatalist</span>())
+    </div>
+*@

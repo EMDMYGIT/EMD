@@ -1,0 +1,44 @@
+﻿@model Contacts.Models.TB_Comments
+
+<div>
+    <h4>TB_Comments</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CommentID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CommentID)
+        </dd>
+     
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ParentType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ParentType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ParentId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ParentId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comment)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

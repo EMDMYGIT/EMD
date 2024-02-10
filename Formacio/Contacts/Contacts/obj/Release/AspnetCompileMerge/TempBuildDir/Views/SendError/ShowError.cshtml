@@ -1,0 +1,21 @@
+﻿@model Contacts.Models.ErrorModels
+
+<div>
+    <h1>Error</h1>
+    <img src="" alt="" />
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TextError)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TextError)
+        </dd>
+       
+    </dl>
+</div>
+<p>
+       @Html.ActionLink("Back to List",Model.returnAction, Model.returnContrtoler)
+    
+</p>
